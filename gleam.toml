@@ -6,8 +6,7 @@ version = "0.1.0"
 #
 licences = ["MIT"]
 description = "A collection of gleam algorithms dealing with phonetics."
-# repository = { type = "github", user = "username", repo = "project" }
-# links = [{ title = "Website", href = "https://gleam.run" }]
+repository = { type = "github", user = "leobm", repo = "phonetic_gleam" }
 links = [{ title = "Gleam", href = "https://gleam.run" }]
 
 [dependencies]
