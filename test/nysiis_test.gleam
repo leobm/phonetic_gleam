@@ -1,5 +1,5 @@
 import gleeunit/should
-import gleam/phonetic/nysiis
+import phonetic_gleam/nysiis
 
 pub fn codes_for_known_words_test() {
   nysiis.encode("Willis")

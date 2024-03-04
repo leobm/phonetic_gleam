@@ -1,5 +1,5 @@
 import gleeunit/should
-import gleam/phonetic/cologne
+import phonetic_gleam/cologne
 
 // A, E, I, J, O, U, Y must become 0
 

@@ -1,5 +1,5 @@
 import gleeunit/should
-import gleam/phonetic/metaphone
+import phonetic_gleam/metaphone
 
 // implement test case from https://github.com/n7v/phonetic/blob/master/spec/phonetic/metaphone_spec.rb
 

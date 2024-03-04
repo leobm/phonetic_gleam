@@ -1,5 +1,5 @@
 import gleeunit/should
-import gleam/phonetic/soundex
+import phonetic_gleam/soundex
 
 pub fn codes_for_known_words_test() {
   soundex.encode("Britney")
