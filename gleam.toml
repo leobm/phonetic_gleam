@@ -5,7 +5,7 @@ version = "0.1.0"
 # your project to the Hex package manager.
 #
 licences = ["MIT"]
-description = "A collection of algorithms dealing with phonetics."
+description = "A collection of gleam algorithms dealing with phonetics."
 # repository = { type = "github", user = "username", repo = "project" }
 # links = [{ title = "Website", href = "https://gleam.run" }]
 links = [{ title = "Gleam", href = "https://gleam.run" }]
@@ -14,7 +14,7 @@ links = [{ title = "Gleam", href = "https://gleam.run" }]
 gleam_stdlib = "~> 0.36"
 
 [dev-dependencies]
-gleeunit = "~> 1.0"
+gleeunit = "~> 1.0.2"
 
 [javascript]
 # Generate TypeScript .d.ts files
