@@ -1,6 +1,5 @@
 import gleam/string
-import gleam/list
-import gleam/set
+import phonetic_gleam/utils.{then_or_else}
 
 // https://en.wikipedia.org/wiki/New_York_State_Identification_and_Intelligence_System
 
@@ -71,26 +70,6 @@ fn drop_last_chars(word: String) -> String {
   }
 }
 
-fn remove_duplicates(word: String) -> String {
-  string.to_graphemes(word)
-  |> list.fold_right([], fn(acc, code) {
-    let last_code = case list.first(acc) {
-      Ok(c) -> c
-      Error(Nil) -> ""
-    }
-    { code == "" || last_code == code }
-    |> then_or_else(acc, [code, ..acc])
-  })
-  |> string.join("")
-}
-
-fn then_or_else(is, then, or_else) {
-  case is {
-    True -> then
-    False -> or_else
-  }
-}
-
 fn first_char(word) {
   case string.pop_grapheme(word) {
     Ok(#(a, _)) -> a
@@ -103,15 +82,17 @@ fn is_vowel(c: String) {
 }
 
 fn prepare_word(word: String) -> String {
-  let allowed_chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    |> string.to_graphemes
-    |> set.from_list
+  word
+  |> string.uppercase
+  |> utils.remove_not_allowed_chars("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+}
 
-  string.uppercase(word)
+fn cleanup(codes) {
+  codes
   |> string.to_graphemes
-  |> list.filter(fn(c) { set.contains(allowed_chars, c) })
+  |> utils.remove_adjacent_dups
   |> string.join("")
+  |> drop_last_chars
 }
 
 pub fn encode(word) -> String {
@@ -125,6 +106,5 @@ pub fn encode(word) -> String {
     |> string.to_graphemes
     |> tr("", "")
   }
-  |> remove_duplicates
-  |> drop_last_chars
+  |> cleanup
 }

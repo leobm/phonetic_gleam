@@ -1,6 +1,7 @@
 import gleam/int
 import gleam/string
 import gleam/list
+import phonetic_gleam/utils.{then_or_else}
 
 // https://en.wikipedia.org/wiki/Cologne_phonetics
 
@@ -28,18 +29,6 @@ fn prepare_word(word) {
   |> string.replace(each: "ß", with: "S")
 }
 
-fn cleanup_adjacent_codes(codes: List(Int)) {
-  codes
-  |> list.fold([], fn(acc, code) {
-    let last_code = case list.first(acc) {
-      Ok(c) -> c
-      Error(Nil) -> -1
-    }
-    { code == -1 || last_code == code }
-    |> then_or_else(acc, [code, ..acc])
-  })
-}
-
 fn remove_zeros(codes) {
   // delete all '0' characters, except at the beginning.
   codes
@@ -55,16 +44,9 @@ fn join_codes(codes: List(Int)) -> String {
   |> string.join("")
 }
 
-fn then_or_else(is, then, or_else) {
-  case is {
-    True -> then
-    False -> or_else
-  }
-}
-
 fn tr(word, recent_char, codes) -> List(Int) {
   case word {
-    "" -> codes
+    "" -> list.reverse(codes)
     _ -> {
       let assert [a, b, t] = first_second_rest(word)
       let is_before = fn(c) { c == b }
@@ -111,7 +93,8 @@ pub fn encode(word) -> String {
   word
   |> prepare_word
   |> tr("", [])
-  |> cleanup_adjacent_codes
+  |> utils.remove_value(-1)
+  |> utils.remove_adjacent_dups
   |> remove_zeros
   |> list.reverse
   |> join_codes
